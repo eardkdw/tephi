@@ -6,6 +6,7 @@ import os.path, sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import io
 from datetime import datetime
 try:
     from cStringIO import StringIO
@@ -18,7 +19,7 @@ from metutils import wetBulbGlobeTemp
 
 metadata = {}
 filename = sys.argv[1]
-with open(filename,'r',encoding='latin1') as f:
+with io.open(filename,'r',encoding='latin1') as f:
    for i in range (0,13):
       metadatain = f.readline()
       metaarray =metadatain.split('\t')
@@ -72,4 +73,10 @@ offset = transforms.ScaledTranslation(10, 0,
   tpg.figure.dpi_scale_trans)
 #shadow_transform = b.transData + offset
 #print(os.path.splitext(os.path.basename(filename)))
-plt.savefig('/data/shareddata/tephigram/Python/' + os.path.splitext(os.path.basename(filename))[0] + '.pdf')
+
+if sys.argv[2]:
+   outfile = sys.argv[2]
+else:
+   outfile = os.path.splitext(os.path.basename(filename))[0] + '.pdf'
+
+plt.savefig(outfile)
