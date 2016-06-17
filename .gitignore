@@ -4,3 +4,6 @@ lib
 lib64
 include
 pip-selfcheck.json
+*.pyc
+*.pdf
+pyvenv.cfg
